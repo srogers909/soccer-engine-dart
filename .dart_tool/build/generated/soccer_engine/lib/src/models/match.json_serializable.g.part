@@ -1,0 +1,102 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Weather _$WeatherFromJson(Map<String, dynamic> json) => Weather(
+  condition: $enumDecode(_$WeatherConditionEnumMap, json['condition']),
+  temperature: (json['temperature'] as num).toDouble(),
+  humidity: (json['humidity'] as num).toDouble(),
+  windSpeed: (json['windSpeed'] as num).toDouble(),
+);
+
+Map<String, dynamic> _$WeatherToJson(Weather instance) => <String, dynamic>{
+  'condition': _$WeatherConditionEnumMap[instance.condition]!,
+  'temperature': instance.temperature,
+  'humidity': instance.humidity,
+  'windSpeed': instance.windSpeed,
+};
+
+const _$WeatherConditionEnumMap = {
+  WeatherCondition.sunny: 'sunny',
+  WeatherCondition.cloudy: 'cloudy',
+  WeatherCondition.rainy: 'rainy',
+  WeatherCondition.snowy: 'snowy',
+  WeatherCondition.windy: 'windy',
+  WeatherCondition.foggy: 'foggy',
+};
+
+Match _$MatchFromJson(Map<String, dynamic> json) => Match(
+  id: json['id'] as String,
+  homeTeam: Team.fromJson(json['homeTeam'] as Map<String, dynamic>),
+  awayTeam: Team.fromJson(json['awayTeam'] as Map<String, dynamic>),
+  weather: Weather.fromJson(json['weather'] as Map<String, dynamic>),
+  kickoffTime: DateTime.parse(json['kickoffTime'] as String),
+  isNeutralVenue: json['isNeutralVenue'] as bool? ?? false,
+  isCompleted: json['isCompleted'] as bool? ?? false,
+  homeGoals: (json['homeGoals'] as num?)?.toInt() ?? 0,
+  awayGoals: (json['awayGoals'] as num?)?.toInt() ?? 0,
+  result: $enumDecodeNullable(_$MatchResultEnumMap, json['result']),
+  currentMinute: (json['currentMinute'] as num?)?.toInt() ?? 0,
+  events:
+      (json['events'] as List<dynamic>?)
+          ?.map((e) => MatchEvent.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+);
+
+Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
+  'id': instance.id,
+  'homeTeam': instance.homeTeam.toJson(),
+  'awayTeam': instance.awayTeam.toJson(),
+  'weather': instance.weather.toJson(),
+  'kickoffTime': instance.kickoffTime.toIso8601String(),
+  'isNeutralVenue': instance.isNeutralVenue,
+  'isCompleted': instance.isCompleted,
+  'homeGoals': instance.homeGoals,
+  'awayGoals': instance.awayGoals,
+  'result': _$MatchResultEnumMap[instance.result],
+  'currentMinute': instance.currentMinute,
+  'events': instance.events.map((e) => e.toJson()).toList(),
+};
+
+const _$MatchResultEnumMap = {
+  MatchResult.homeWin: 'homeWin',
+  MatchResult.draw: 'draw',
+  MatchResult.awayWin: 'awayWin',
+};
+
+MatchEvent _$MatchEventFromJson(Map<String, dynamic> json) => MatchEvent(
+  id: json['id'] as String,
+  type: $enumDecode(_$MatchEventTypeEnumMap, json['type']),
+  minute: (json['minute'] as num).toInt(),
+  teamId: json['teamId'] as String,
+  description: json['description'] as String,
+  playerId: json['playerId'] as String?,
+  playerName: json['playerName'] as String?,
+  metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
+);
+
+Map<String, dynamic> _$MatchEventToJson(MatchEvent instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': _$MatchEventTypeEnumMap[instance.type]!,
+      'minute': instance.minute,
+      'playerId': instance.playerId,
+      'playerName': instance.playerName,
+      'teamId': instance.teamId,
+      'description': instance.description,
+      'metadata': instance.metadata,
+    };
+
+const _$MatchEventTypeEnumMap = {
+  MatchEventType.goal: 'goal',
+  MatchEventType.yellowCard: 'yellowCard',
+  MatchEventType.redCard: 'redCard',
+  MatchEventType.substitution: 'substitution',
+  MatchEventType.kickoff: 'kickoff',
+  MatchEventType.halfTime: 'halfTime',
+  MatchEventType.fullTime: 'fullTime',
+  MatchEventType.penalty: 'penalty',
+  MatchEventType.ownGoal: 'ownGoal',
+  MatchEventType.assist: 'assist',
+};

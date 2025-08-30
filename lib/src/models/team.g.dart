@@ -1,0 +1,62 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'team.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Stadium _$StadiumFromJson(Map<String, dynamic> json) => Stadium(
+  name: json['name'] as String,
+  capacity: (json['capacity'] as num).toInt(),
+  city: json['city'] as String,
+);
+
+Map<String, dynamic> _$StadiumToJson(Stadium instance) => <String, dynamic>{
+  'name': instance.name,
+  'capacity': instance.capacity,
+  'city': instance.city,
+};
+
+Team _$TeamFromJson(Map<String, dynamic> json) => Team(
+  id: json['id'] as String,
+  name: json['name'] as String,
+  city: json['city'] as String,
+  foundedYear: (json['foundedYear'] as num).toInt(),
+  stadium: json['stadium'] == null
+      ? null
+      : Stadium.fromJson(json['stadium'] as Map<String, dynamic>),
+  players: (json['players'] as List<dynamic>?)
+      ?.map((e) => Player.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  formation: $enumDecodeNullable(_$FormationEnumMap, json['formation']),
+  startingXI: (json['startingXI'] as List<dynamic>?)
+      ?.map((e) => Player.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  morale: (json['morale'] as num?)?.toInt(),
+);
+
+Map<String, dynamic> _$TeamToJson(Team instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'city': instance.city,
+  'foundedYear': instance.foundedYear,
+  'stadium': instance.stadium.toJson(),
+  'players': instance.players.map((e) => e.toJson()).toList(),
+  'formation': _$FormationEnumMap[instance.formation]!,
+  'startingXI': instance.startingXI.map((e) => e.toJson()).toList(),
+  'morale': instance.morale,
+};
+
+const _$FormationEnumMap = {
+  Formation.f442: 'f442',
+  Formation.f433: 'f433',
+  Formation.f352: 'f352',
+  Formation.f541: 'f541',
+  Formation.f343: 'f343',
+  Formation.f532: 'f532',
+  Formation.f4231: 'f4231',
+  Formation.f4141: 'f4141',
+  Formation.f451: 'f451',
+  Formation.f3421: 'f3421',
+};

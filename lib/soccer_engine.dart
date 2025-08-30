@@ -10,15 +10,22 @@ library soccer_engine;
 
 // Core models (implemented)
 export 'src/models/player.dart';
+export 'src/models/team.dart';
+export 'src/models/youth_player.dart';
+export 'src/models/youth_academy.dart';
+
+// Core models (implemented)
+export 'src/models/match.dart';
+export 'src/models/tactics.dart';
 
 // TODO: Core models (to be implemented)
-// export 'src/models/team.dart';
-// export 'src/models/match.dart';
 // export 'src/models/league.dart';
 
+// Game systems (implemented)
+export 'src/systems/match_simulator.dart';
+export 'src/systems/tactical_system.dart';
+
 // TODO: Game systems (to be implemented)
-// export 'src/systems/match_engine.dart';
-// export 'src/systems/tactical_system.dart';
 // export 'src/systems/financial_system.dart';
 // export 'src/systems/youth_academy.dart';
 

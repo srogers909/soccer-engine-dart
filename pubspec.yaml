@@ -3,11 +3,11 @@ description: A comprehensive soccer simulation engine with tactical focus, stati
 version: 1.0.0
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ^3.8.0
 
 dependencies:
   # Core dependencies for JSON serialization and data handling
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   equatable: ^2.0.5
   uuid: ^4.1.0
 

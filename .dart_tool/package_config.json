@@ -449,7 +449,7 @@
       "name": "soccer_engine",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.8"
     }
   ],
   "generator": "pub",
