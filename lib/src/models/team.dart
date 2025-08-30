@@ -293,6 +293,31 @@ class Team extends Equatable {
     );
   }
 
+  /// Creates a copy of the team with updated values
+  Team copyWith({
+    String? id,
+    String? name,
+    String? city,
+    int? foundedYear,
+    Stadium? stadium,
+    List<Player>? players,
+    Formation? formation,
+    List<Player>? startingXI,
+    int? morale,
+  }) {
+    return Team(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      city: city ?? this.city,
+      foundedYear: foundedYear ?? this.foundedYear,
+      stadium: stadium ?? this.stadium,
+      players: players ?? this.players,
+      formation: formation ?? this.formation,
+      startingXI: startingXI ?? this.startingXI,
+      morale: morale ?? this.morale,
+    );
+  }
+
   /// Calculates overall team rating based on all players
   int get overallRating {
     if (players.isEmpty) return 0;

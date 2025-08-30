@@ -25,6 +25,7 @@ export 'src/models/league.dart';
 export 'src/models/gameweek.dart';
 
 // Game systems (implemented)
+export 'src/systems/game_state.dart';
 export 'src/systems/match_simulator.dart';
 export 'src/systems/tactical_system.dart';
 

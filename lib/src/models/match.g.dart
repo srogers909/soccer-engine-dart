@@ -46,6 +46,19 @@ Match _$MatchFromJson(Map<String, dynamic> json) => Match(
           ?.map((e) => MatchEvent.fromJson(e as Map<String, dynamic>))
           .toList() ??
       const [],
+  matchStats: json['matchStats'] == null
+      ? null
+      : MatchStats.fromJson(json['matchStats'] as Map<String, dynamic>),
+  playerPerformances: (json['playerPerformances'] as Map<String, dynamic>?)
+      ?.map(
+        (k, e) =>
+            MapEntry(k, PlayerPerformance.fromJson(e as Map<String, dynamic>)),
+      ),
+  momentumTracker: json['momentumTracker'] == null
+      ? null
+      : MomentumTracker.fromJson(
+          json['momentumTracker'] as Map<String, dynamic>,
+        ),
 );
 
 Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
@@ -61,6 +74,11 @@ Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
   'result': _$MatchResultEnumMap[instance.result],
   'currentMinute': instance.currentMinute,
   'events': instance.events.map((e) => e.toJson()).toList(),
+  'matchStats': instance.matchStats?.toJson(),
+  'playerPerformances': instance.playerPerformances?.map(
+    (k, e) => MapEntry(k, e.toJson()),
+  ),
+  'momentumTracker': instance.momentumTracker?.toJson(),
 };
 
 const _$MatchResultEnumMap = {
@@ -103,4 +121,15 @@ const _$MatchEventTypeEnumMap = {
   MatchEventType.penalty: 'penalty',
   MatchEventType.ownGoal: 'ownGoal',
   MatchEventType.assist: 'assist',
+  MatchEventType.injury: 'injury',
+  MatchEventType.shot: 'shot',
+  MatchEventType.shotOnTarget: 'shotOnTarget',
+  MatchEventType.shotOffTarget: 'shotOffTarget',
+  MatchEventType.tackle: 'tackle',
+  MatchEventType.foul: 'foul',
+  MatchEventType.corner: 'corner',
+  MatchEventType.offside: 'offside',
+  MatchEventType.save: 'save',
+  MatchEventType.tacticalChange: 'tacticalChange',
+  MatchEventType.momentumShift: 'momentumShift',
 };

@@ -1,0 +1,125 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+MatchStats _$MatchStatsFromJson(Map<String, dynamic> json) => MatchStats(
+  homePossession: (json['homePossession'] as num).toDouble(),
+  awayPossession: (json['awayPossession'] as num).toDouble(),
+  homeShots: (json['homeShots'] as num).toInt(),
+  awayShots: (json['awayShots'] as num).toInt(),
+  homeShotsOnTarget: (json['homeShotsOnTarget'] as num).toInt(),
+  awayShotsOnTarget: (json['awayShotsOnTarget'] as num).toInt(),
+  homePasses: (json['homePasses'] as num).toInt(),
+  awayPasses: (json['awayPasses'] as num).toInt(),
+  homePassAccuracy: (json['homePassAccuracy'] as num).toDouble(),
+  awayPassAccuracy: (json['awayPassAccuracy'] as num).toDouble(),
+  homeTackles: (json['homeTackles'] as num).toInt(),
+  awayTackles: (json['awayTackles'] as num).toInt(),
+  homeCorners: (json['homeCorners'] as num).toInt(),
+  awayCorners: (json['awayCorners'] as num).toInt(),
+  homeOffsides: (json['homeOffsides'] as num).toInt(),
+  awayOffsides: (json['awayOffsides'] as num).toInt(),
+  homeFouls: (json['homeFouls'] as num).toInt(),
+  awayFouls: (json['awayFouls'] as num).toInt(),
+);
+
+Map<String, dynamic> _$MatchStatsToJson(MatchStats instance) =>
+    <String, dynamic>{
+      'homePossession': instance.homePossession,
+      'awayPossession': instance.awayPossession,
+      'homeShots': instance.homeShots,
+      'awayShots': instance.awayShots,
+      'homeShotsOnTarget': instance.homeShotsOnTarget,
+      'awayShotsOnTarget': instance.awayShotsOnTarget,
+      'homePasses': instance.homePasses,
+      'awayPasses': instance.awayPasses,
+      'homePassAccuracy': instance.homePassAccuracy,
+      'awayPassAccuracy': instance.awayPassAccuracy,
+      'homeTackles': instance.homeTackles,
+      'awayTackles': instance.awayTackles,
+      'homeCorners': instance.homeCorners,
+      'awayCorners': instance.awayCorners,
+      'homeOffsides': instance.homeOffsides,
+      'awayOffsides': instance.awayOffsides,
+      'homeFouls': instance.homeFouls,
+      'awayFouls': instance.awayFouls,
+    };
+
+PlayerPerformance _$PlayerPerformanceFromJson(Map<String, dynamic> json) =>
+    PlayerPerformance(
+      playerId: json['playerId'] as String,
+      playerName: json['playerName'] as String,
+      rating: (json['rating'] as num).toDouble(),
+      goals: (json['goals'] as num?)?.toInt() ?? 0,
+      assists: (json['assists'] as num?)?.toInt() ?? 0,
+      shots: (json['shots'] as num?)?.toInt() ?? 0,
+      shotsOnTarget: (json['shotsOnTarget'] as num?)?.toInt() ?? 0,
+      passes: (json['passes'] as num?)?.toInt() ?? 0,
+      passAccuracy: (json['passAccuracy'] as num?)?.toDouble() ?? 0.0,
+      tackles: (json['tackles'] as num?)?.toInt() ?? 0,
+      fouls: (json['fouls'] as num?)?.toInt() ?? 0,
+      yellowCards: (json['yellowCards'] as num?)?.toInt() ?? 0,
+      redCards: (json['redCards'] as num?)?.toInt() ?? 0,
+      minutesPlayed: (json['minutesPlayed'] as num?)?.toInt() ?? 0,
+    );
+
+Map<String, dynamic> _$PlayerPerformanceToJson(PlayerPerformance instance) =>
+    <String, dynamic>{
+      'playerId': instance.playerId,
+      'playerName': instance.playerName,
+      'rating': instance.rating,
+      'goals': instance.goals,
+      'assists': instance.assists,
+      'shots': instance.shots,
+      'shotsOnTarget': instance.shotsOnTarget,
+      'passes': instance.passes,
+      'passAccuracy': instance.passAccuracy,
+      'tackles': instance.tackles,
+      'fouls': instance.fouls,
+      'yellowCards': instance.yellowCards,
+      'redCards': instance.redCards,
+      'minutesPlayed': instance.minutesPlayed,
+    };
+
+MomentumTracker _$MomentumTrackerFromJson(Map<String, dynamic> json) =>
+    MomentumTracker(
+      homeMomentum: (json['homeMomentum'] as num).toDouble(),
+      awayMomentum: (json['awayMomentum'] as num).toDouble(),
+      lastShift: (json['lastShift'] as num).toInt(),
+      shiftEvents: (json['shiftEvents'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$MomentumTrackerToJson(MomentumTracker instance) =>
+    <String, dynamic>{
+      'homeMomentum': instance.homeMomentum,
+      'awayMomentum': instance.awayMomentum,
+      'lastShift': instance.lastShift,
+      'shiftEvents': instance.shiftEvents,
+    };
+
+TeamTactics _$TeamTacticsFromJson(Map<String, dynamic> json) => TeamTactics(
+  mentality: $enumDecode(_$TeamMentalityEnumMap, json['mentality']),
+  pressing: (json['pressing'] as num).toInt(),
+  tempo: (json['tempo'] as num).toInt(),
+  width: (json['width'] as num).toInt(),
+  directness: (json['directness'] as num).toInt(),
+);
+
+Map<String, dynamic> _$TeamTacticsToJson(TeamTactics instance) =>
+    <String, dynamic>{
+      'mentality': _$TeamMentalityEnumMap[instance.mentality]!,
+      'pressing': instance.pressing,
+      'tempo': instance.tempo,
+      'width': instance.width,
+      'directness': instance.directness,
+    };
+
+const _$TeamMentalityEnumMap = {
+  TeamMentality.veryDefensive: 'veryDefensive',
+  TeamMentality.defensive: 'defensive',
+  TeamMentality.balanced: 'balanced',
+  TeamMentality.attacking: 'attacking',
+  TeamMentality.veryAttacking: 'veryAttacking',
+};

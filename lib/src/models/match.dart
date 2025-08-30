@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'team.dart';
+import 'enhanced_match.dart';
 
 part 'match.g.dart';
 
@@ -152,6 +153,11 @@ class Match {
   final MatchResult? result;
   final int currentMinute;
   final List<MatchEvent> events;
+  
+  // Enhanced Football Manager-style fields
+  final MatchStats? matchStats;
+  final Map<String, PlayerPerformance>? playerPerformances;
+  final MomentumTracker? momentumTracker;
 
   const Match({
     required this.id,
@@ -166,6 +172,9 @@ class Match {
     this.result,
     this.currentMinute = 0,
     this.events = const [],
+    this.matchStats,
+    this.playerPerformances,
+    this.momentumTracker,
   });
 
   /// Creates a new match with validation
@@ -228,6 +237,9 @@ class Match {
     MatchResult? result,
     int? currentMinute,
     List<MatchEvent>? events,
+    MatchStats? matchStats,
+    Map<String, PlayerPerformance>? playerPerformances,
+    MomentumTracker? momentumTracker,
   }) {
     return Match(
       id: id,
@@ -242,6 +254,9 @@ class Match {
       result: result ?? this.result,
       currentMinute: currentMinute ?? this.currentMinute,
       events: events ?? this.events,
+      matchStats: matchStats ?? this.matchStats,
+      playerPerformances: playerPerformances ?? this.playerPerformances,
+      momentumTracker: momentumTracker ?? this.momentumTracker,
     );
   }
 
@@ -276,7 +291,19 @@ enum MatchEventType {
   fullTime,
   penalty,
   ownGoal,
-  assist
+  assist,
+  // Enhanced Football Manager-style events
+  injury,
+  shot,
+  shotOnTarget,
+  shotOffTarget,
+  tackle,
+  foul,
+  corner,
+  offside,
+  save,
+  tacticalChange,
+  momentumShift
 }
 
 /// Represents an event that occurs during a match
