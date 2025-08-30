@@ -2,7 +2,7 @@ import 'package:test/test.dart';
 import 'package:soccer_engine/src/systems/match_simulator.dart';
 import 'package:soccer_engine/src/models/match.dart';
 import 'package:soccer_engine/src/models/team.dart';
-import 'package:soccer_engine/src/models/player.dart';
+import 'package:soccer_utilities/src/models/player.dart';
 import 'package:soccer_engine/src/models/enhanced_match.dart';
 
 void main() {

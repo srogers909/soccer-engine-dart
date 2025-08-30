@@ -302,6 +302,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "soccer_utilities",
+      "rootUri": "../../utilities",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
       "name": "source_gen",
       "rootUri": "file:///C:/Users/steve/AppData/Local/Pub/Cache/hosted/pub.dev/source_gen-3.1.0",
       "packageUri": "lib/",

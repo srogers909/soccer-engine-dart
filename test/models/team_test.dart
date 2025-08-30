@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:soccer_engine/src/models/team.dart';
-import 'package:soccer_engine/src/models/player.dart';
+import 'package:soccer_utilities/src/models/player.dart';
 
 void main() {
   group('Team Model Tests', () {

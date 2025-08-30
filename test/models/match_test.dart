@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import 'package:soccer_engine/src/models/match.dart';
 import 'package:soccer_engine/src/models/team.dart';
-import 'package:soccer_engine/src/models/player.dart';
+import 'package:soccer_utilities/src/models/player.dart';
 
 void main() {
   group('WeatherCondition', () {
@@ -514,7 +514,7 @@ void main() {
 
   group('MatchEventType', () {
     test('should have all expected event types', () {
-      expect(MatchEventType.values, hasLength(10));
+      expect(MatchEventType.values, hasLength(21));
       expect(MatchEventType.values, contains(MatchEventType.goal));
       expect(MatchEventType.values, contains(MatchEventType.yellowCard));
       expect(MatchEventType.values, contains(MatchEventType.redCard));
@@ -525,6 +525,18 @@ void main() {
       expect(MatchEventType.values, contains(MatchEventType.penalty));
       expect(MatchEventType.values, contains(MatchEventType.ownGoal));
       expect(MatchEventType.values, contains(MatchEventType.assist));
+      // Enhanced Football Manager-style events
+      expect(MatchEventType.values, contains(MatchEventType.injury));
+      expect(MatchEventType.values, contains(MatchEventType.shot));
+      expect(MatchEventType.values, contains(MatchEventType.shotOnTarget));
+      expect(MatchEventType.values, contains(MatchEventType.shotOffTarget));
+      expect(MatchEventType.values, contains(MatchEventType.tackle));
+      expect(MatchEventType.values, contains(MatchEventType.foul));
+      expect(MatchEventType.values, contains(MatchEventType.corner));
+      expect(MatchEventType.values, contains(MatchEventType.offside));
+      expect(MatchEventType.values, contains(MatchEventType.save));
+      expect(MatchEventType.values, contains(MatchEventType.tacticalChange));
+      expect(MatchEventType.values, contains(MatchEventType.momentumShift));
     });
   });
 

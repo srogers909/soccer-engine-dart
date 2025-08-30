@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 import '../../lib/src/models/youth_academy.dart';
 import '../../lib/src/models/youth_player.dart';
-import '../../lib/src/models/player.dart';
+import 'package:soccer_utilities/src/models/player.dart';
 
 void main() {
   group('YouthAcademy Model Tests', () {

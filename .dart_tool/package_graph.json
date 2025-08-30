@@ -9,6 +9,7 @@
       "dependencies": [
         "equatable",
         "json_annotation",
+        "soccer_utilities",
         "uuid"
       ],
       "devDependencies": [
@@ -153,6 +154,14 @@
         "web_socket_channel",
         "webkit_inspection_protocol",
         "yaml"
+      ]
+    },
+    {
+      "name": "soccer_utilities",
+      "version": "1.0.0+1",
+      "dependencies": [
+        "equatable",
+        "json_annotation"
       ]
     },
     {

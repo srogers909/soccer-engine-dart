@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'player.dart';
+import 'package:soccer_utilities/src/models/player.dart';
 
 part 'team.g.dart';
 

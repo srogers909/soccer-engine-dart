@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../../lib/src/models/player.dart';
+import 'package:soccer_utilities/src/models/player.dart';
 import '../../lib/src/models/team.dart';
 import '../../lib/src/models/tactics.dart' as tactics;
 import '../../lib/src/systems/tactical_system.dart';

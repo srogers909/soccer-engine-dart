@@ -9,7 +9,7 @@
 library soccer_engine;
 
 // Core models (implemented)
-export 'src/models/player.dart' show Player, PlayerPosition;
+export 'package:soccer_utilities/src/models/player.dart' show Player, PlayerPosition;
 export 'src/models/team.dart' hide Formation;
 export 'src/models/youth_player.dart';
 export 'src/models/youth_academy.dart';
