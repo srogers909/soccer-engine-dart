@@ -21,9 +21,8 @@ export 'src/utils/player_valuation.dart';
 // Core models (implemented)
 export 'src/models/match.dart';
 export 'src/models/tactics.dart' hide PlayerPosition;
-
-// TODO: Core models (to be implemented)
-// export 'src/models/league.dart';
+export 'src/models/league.dart';
+export 'src/models/gameweek.dart';
 
 // Game systems (implemented)
 export 'src/systems/match_simulator.dart';
