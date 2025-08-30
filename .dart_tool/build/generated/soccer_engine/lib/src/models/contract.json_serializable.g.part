@@ -1,0 +1,60 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Contract _$ContractFromJson(Map<String, dynamic> json) => Contract(
+  id: json['id'] as String,
+  playerId: json['playerId'] as String,
+  teamId: json['teamId'] as String,
+  startDate: DateTime.parse(json['startDate'] as String),
+  endDate: DateTime.parse(json['endDate'] as String),
+  weeklySalary: (json['weeklySalary'] as num).toInt(),
+  contractType: $enumDecodeNullable(
+    _$ContractTypeEnumMap,
+    json['contractType'],
+  ),
+  signingBonus: (json['signingBonus'] as num?)?.toInt(),
+  releaseClause: (json['releaseClause'] as num?)?.toInt(),
+  loyaltyBonus: (json['loyaltyBonus'] as num?)?.toInt(),
+  performanceBonuses: (json['performanceBonuses'] as Map<String, dynamic>?)
+      ?.map(
+        (k, e) => MapEntry(
+          $enumDecode(_$PerformanceBonusEnumMap, k),
+          (e as num).toInt(),
+        ),
+      ),
+  isActive: json['isActive'] as bool?,
+);
+
+Map<String, dynamic> _$ContractToJson(Contract instance) => <String, dynamic>{
+  'id': instance.id,
+  'playerId': instance.playerId,
+  'teamId': instance.teamId,
+  'startDate': instance.startDate.toIso8601String(),
+  'endDate': instance.endDate.toIso8601String(),
+  'weeklySalary': instance.weeklySalary,
+  'contractType': _$ContractTypeEnumMap[instance.contractType]!,
+  'signingBonus': instance.signingBonus,
+  'releaseClause': instance.releaseClause,
+  'loyaltyBonus': instance.loyaltyBonus,
+  'performanceBonuses': instance.performanceBonuses.map(
+    (k, e) => MapEntry(_$PerformanceBonusEnumMap[k]!, e),
+  ),
+  'isActive': instance.isActive,
+};
+
+const _$ContractTypeEnumMap = {
+  ContractType.playing: 'playing',
+  ContractType.youth: 'youth',
+  ContractType.coaching: 'coaching',
+  ContractType.staff: 'staff',
+};
+
+const _$PerformanceBonusEnumMap = {
+  PerformanceBonus.goalBonus: 'goalBonus',
+  PerformanceBonus.assistBonus: 'assistBonus',
+  PerformanceBonus.cleanSheetBonus: 'cleanSheetBonus',
+  PerformanceBonus.appearanceBonus: 'appearanceBonus',
+  PerformanceBonus.winBonus: 'winBonus',
+  PerformanceBonus.trophyBonus: 'trophyBonus',
+};

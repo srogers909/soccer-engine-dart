@@ -1,0 +1,49 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+BudgetAllocation _$BudgetAllocationFromJson(Map<String, dynamic> json) =>
+    BudgetAllocation(
+      transferBudget: (json['transferBudget'] as num).toInt(),
+      wageBudget: (json['wageBudget'] as num).toInt(),
+      youthBudget: (json['youthBudget'] as num).toInt(),
+      facilitiesBudget: (json['facilitiesBudget'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$BudgetAllocationToJson(BudgetAllocation instance) =>
+    <String, dynamic>{
+      'transferBudget': instance.transferBudget,
+      'wageBudget': instance.wageBudget,
+      'youthBudget': instance.youthBudget,
+      'facilitiesBudget': instance.facilitiesBudget,
+    };
+
+GMProfile _$GMProfileFromJson(Map<String, dynamic> json) => GMProfile(
+  id: json['id'] as String,
+  name: json['name'] as String,
+  personality: $enumDecode(_$GMPersonalityEnumMap, json['personality']),
+  riskTolerance: (json['riskTolerance'] as num?)?.toDouble() ?? 0.5,
+  youthFocus: (json['youthFocus'] as num?)?.toDouble() ?? 0.5,
+  tacticalFocus: (json['tacticalFocus'] as num?)?.toDouble() ?? 0.5,
+  transferBudgetRatio: (json['transferBudgetRatio'] as num?)?.toDouble() ?? 0.5,
+  wageBudgetRatio: (json['wageBudgetRatio'] as num?)?.toDouble() ?? 0.4,
+);
+
+Map<String, dynamic> _$GMProfileToJson(GMProfile instance) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'personality': _$GMPersonalityEnumMap[instance.personality]!,
+  'riskTolerance': instance.riskTolerance,
+  'youthFocus': instance.youthFocus,
+  'tacticalFocus': instance.tacticalFocus,
+  'transferBudgetRatio': instance.transferBudgetRatio,
+  'wageBudgetRatio': instance.wageBudgetRatio,
+};
+
+const _$GMPersonalityEnumMap = {
+  GMPersonality.conservative: 'conservative',
+  GMPersonality.aggressive: 'aggressive',
+  GMPersonality.balanced: 'balanced',
+  GMPersonality.youthFocused: 'youthFocused',
+  GMPersonality.tactical: 'tactical',
+};

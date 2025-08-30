@@ -1,0 +1,87 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+TransferTarget _$TransferTargetFromJson(Map<String, dynamic> json) =>
+    TransferTarget(
+      player: Player.fromJson(json['player'] as Map<String, dynamic>),
+      priority: (json['priority'] as num).toInt(),
+      estimatedFee: (json['estimatedFee'] as num).toInt(),
+      maxFee: (json['maxFee'] as num).toInt(),
+      need: $enumDecode(_$TransferNeedEnumMap, json['need']),
+      confidence: (json['confidence'] as num).toDouble(),
+      scoutingNotes: json['scoutingNotes'] as Map<String, dynamic>? ?? const {},
+    );
+
+Map<String, dynamic> _$TransferTargetToJson(TransferTarget instance) =>
+    <String, dynamic>{
+      'player': instance.player.toJson(),
+      'priority': instance.priority,
+      'estimatedFee': instance.estimatedFee,
+      'maxFee': instance.maxFee,
+      'need': _$TransferNeedEnumMap[instance.need]!,
+      'confidence': instance.confidence,
+      'scoutingNotes': instance.scoutingNotes,
+    };
+
+const _$TransferNeedEnumMap = {
+  TransferNeed.goalkeeper: 'goalkeeper',
+  TransferNeed.defender: 'defender',
+  TransferNeed.midfielder: 'midfielder',
+  TransferNeed.forward: 'forward',
+  TransferNeed.backup: 'backup',
+  TransferNeed.youth: 'youth',
+  TransferNeed.star: 'star',
+  TransferNeed.depth: 'depth',
+};
+
+TransferMarketAnalysis _$TransferMarketAnalysisFromJson(
+  Map<String, dynamic> json,
+) => TransferMarketAnalysis(
+  squadNeeds: (json['squadNeeds'] as List<dynamic>)
+      .map((e) => $enumDecode(_$TransferNeedEnumMap, e))
+      .toList(),
+  targets: (json['targets'] as List<dynamic>)
+      .map((e) => TransferTarget.fromJson(e as Map<String, dynamic>))
+      .toList(),
+  availableBudget: (json['availableBudget'] as num).toInt(),
+  strategy: json['strategy'] as String,
+  confidence: (json['confidence'] as num).toDouble(),
+  timestamp: DateTime.parse(json['timestamp'] as String),
+);
+
+Map<String, dynamic> _$TransferMarketAnalysisToJson(
+  TransferMarketAnalysis instance,
+) => <String, dynamic>{
+  'squadNeeds': instance.squadNeeds
+      .map((e) => _$TransferNeedEnumMap[e]!)
+      .toList(),
+  'targets': instance.targets.map((e) => e.toJson()).toList(),
+  'availableBudget': instance.availableBudget,
+  'strategy': instance.strategy,
+  'confidence': instance.confidence,
+  'timestamp': instance.timestamp.toIso8601String(),
+};
+
+TransferAI _$TransferAIFromJson(Map<String, dynamic> json) => TransferAI(
+  decisionEngine: DecisionEngine.fromJson(
+    json['decisionEngine'] as Map<String, dynamic>,
+  ),
+  targets:
+      (json['targets'] as List<dynamic>?)
+          ?.map((e) => TransferTarget.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  transferBudget: (json['transferBudget'] as num?)?.toInt() ?? 0,
+  minRatingThreshold: (json['minRatingThreshold'] as num?)?.toInt() ?? 70,
+  isActive: json['isActive'] as bool? ?? true,
+);
+
+Map<String, dynamic> _$TransferAIToJson(TransferAI instance) =>
+    <String, dynamic>{
+      'decisionEngine': instance.decisionEngine.toJson(),
+      'targets': instance.targets.map((e) => e.toJson()).toList(),
+      'transferBudget': instance.transferBudget,
+      'minRatingThreshold': instance.minRatingThreshold,
+      'isActive': instance.isActive,
+    };

@@ -1,0 +1,94 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+FFPStatus _$FFPStatusFromJson(Map<String, dynamic> json) => FFPStatus(
+  isCompliant: json['isCompliant'] as bool,
+  totalLoss: (json['totalLoss'] as num).toInt(),
+  maxAllowedLoss: (json['maxAllowedLoss'] as num).toInt(),
+  periodStart: DateTime.parse(json['periodStart'] as String),
+  periodEnd: DateTime.parse(json['periodEnd'] as String),
+);
+
+Map<String, dynamic> _$FFPStatusToJson(FFPStatus instance) => <String, dynamic>{
+  'isCompliant': instance.isCompliant,
+  'totalLoss': instance.totalLoss,
+  'maxAllowedLoss': instance.maxAllowedLoss,
+  'periodStart': instance.periodStart.toIso8601String(),
+  'periodEnd': instance.periodEnd.toIso8601String(),
+};
+
+Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
+  id: json['id'] as String,
+  amount: (json['amount'] as num).toInt(),
+  type: $enumDecode(_$TransactionTypeEnumMap, json['type']),
+  description: json['description'] as String,
+  date: DateTime.parse(json['date'] as String),
+  category: $enumDecodeNullable(_$BudgetCategoryEnumMap, json['category']),
+  relatedEntityId: json['relatedEntityId'] as String?,
+  metadata: json['metadata'] as Map<String, dynamic>? ?? const {},
+);
+
+Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'amount': instance.amount,
+      'type': _$TransactionTypeEnumMap[instance.type]!,
+      'description': instance.description,
+      'date': instance.date.toIso8601String(),
+      'category': _$BudgetCategoryEnumMap[instance.category],
+      'relatedEntityId': instance.relatedEntityId,
+      'metadata': instance.metadata,
+    };
+
+const _$TransactionTypeEnumMap = {
+  TransactionType.transfer: 'transfer',
+  TransactionType.wages: 'wages',
+  TransactionType.revenue: 'revenue',
+  TransactionType.facilities: 'facilities',
+  TransactionType.other: 'other',
+};
+
+const _$BudgetCategoryEnumMap = {
+  BudgetCategory.transfers: 'transfers',
+  BudgetCategory.wages: 'wages',
+  BudgetCategory.facilities: 'facilities',
+  BudgetCategory.youth: 'youth',
+  BudgetCategory.marketing: 'marketing',
+  BudgetCategory.other: 'other',
+};
+
+FinancialAccount _$FinancialAccountFromJson(Map<String, dynamic> json) =>
+    FinancialAccount(
+      teamId: json['teamId'] as String,
+      balance: (json['balance'] as num).toInt(),
+      currency: json['currency'] as String,
+      transactions:
+          (json['transactions'] as List<dynamic>?)
+              ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      budgetLimits:
+          (json['budgetLimits'] as Map<String, dynamic>?)?.map(
+            (k, e) => MapEntry(
+              $enumDecode(_$BudgetCategoryEnumMap, k),
+              (e as num).toInt(),
+            ),
+          ) ??
+          const {},
+      allowOverdraft: json['allowOverdraft'] as bool? ?? false,
+      overdraftLimit: (json['overdraftLimit'] as num?)?.toInt() ?? 0,
+    );
+
+Map<String, dynamic> _$FinancialAccountToJson(FinancialAccount instance) =>
+    <String, dynamic>{
+      'teamId': instance.teamId,
+      'balance': instance.balance,
+      'currency': instance.currency,
+      'transactions': instance.transactions,
+      'budgetLimits': instance.budgetLimits.map(
+        (k, e) => MapEntry(_$BudgetCategoryEnumMap[k]!, e),
+      ),
+      'allowOverdraft': instance.allowOverdraft,
+      'overdraftLimit': instance.overdraftLimit,
+    };

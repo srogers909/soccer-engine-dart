@@ -1,0 +1,72 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+Transfer _$TransferFromJson(Map<String, dynamic> json) => Transfer(
+  id: json['id'] as String,
+  playerId: json['playerId'] as String,
+  sellingTeamId: json['sellingTeamId'] as String,
+  buyingTeamId: json['buyingTeamId'] as String,
+  transferFee: (json['transferFee'] as num).toInt(),
+  agreedDate: DateTime.parse(json['agreedDate'] as String),
+  transferType: $enumDecodeNullable(
+    _$TransferTypeEnumMap,
+    json['transferType'],
+  ),
+  status: $enumDecodeNullable(_$TransferStatusEnumMap, json['status']),
+  loanDuration: (json['loanDuration'] as num?)?.toInt(),
+  loanFee: (json['loanFee'] as num?)?.toInt(),
+  wageContribution: (json['wageContribution'] as num?)?.toInt(),
+  buyBackClause: (json['buyBackClause'] as num?)?.toInt(),
+  sellOnClause: (json['sellOnClause'] as num?)?.toInt(),
+  addOnClauses: (json['addOnClauses'] as Map<String, dynamic>?)?.map(
+    (k, e) =>
+        MapEntry($enumDecode(_$AddOnClauseEnumMap, k), (e as num).toInt()),
+  ),
+  completionDate: json['completionDate'] == null
+      ? null
+      : DateTime.parse(json['completionDate'] as String),
+);
+
+Map<String, dynamic> _$TransferToJson(Transfer instance) => <String, dynamic>{
+  'id': instance.id,
+  'playerId': instance.playerId,
+  'sellingTeamId': instance.sellingTeamId,
+  'buyingTeamId': instance.buyingTeamId,
+  'transferFee': instance.transferFee,
+  'agreedDate': instance.agreedDate.toIso8601String(),
+  'transferType': _$TransferTypeEnumMap[instance.transferType]!,
+  'status': _$TransferStatusEnumMap[instance.status]!,
+  'loanDuration': instance.loanDuration,
+  'loanFee': instance.loanFee,
+  'wageContribution': instance.wageContribution,
+  'buyBackClause': instance.buyBackClause,
+  'sellOnClause': instance.sellOnClause,
+  'addOnClauses': instance.addOnClauses.map(
+    (k, e) => MapEntry(_$AddOnClauseEnumMap[k]!, e),
+  ),
+  'completionDate': instance.completionDate?.toIso8601String(),
+};
+
+const _$TransferTypeEnumMap = {
+  TransferType.permanent: 'permanent',
+  TransferType.loan: 'loan',
+  TransferType.freeTransfer: 'freeTransfer',
+};
+
+const _$TransferStatusEnumMap = {
+  TransferStatus.agreed: 'agreed',
+  TransferStatus.completed: 'completed',
+  TransferStatus.cancelled: 'cancelled',
+  TransferStatus.rejected: 'rejected',
+};
+
+const _$AddOnClauseEnumMap = {
+  AddOnClause.appearances: 'appearances',
+  AddOnClause.goals: 'goals',
+  AddOnClause.assists: 'assists',
+  AddOnClause.internationalCaps: 'internationalCaps',
+  AddOnClause.trophies: 'trophies',
+  AddOnClause.promotion: 'promotion',
+  AddOnClause.relegation: 'relegation',
+};
