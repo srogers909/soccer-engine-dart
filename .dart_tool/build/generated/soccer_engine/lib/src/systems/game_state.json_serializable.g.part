@@ -1,0 +1,19 @@
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+GameState _$GameStateFromJson(Map<String, dynamic> json) => GameState(
+  league: League.fromJson(json['league'] as Map<String, dynamic>),
+  playerTeamId: json['playerTeamId'] as String,
+  currentDate: DateTime.parse(json['currentDate'] as String),
+  currentDay: (json['currentDay'] as num).toInt(),
+  currentSeason: (json['currentSeason'] as num?)?.toInt() ?? 1,
+);
+
+Map<String, dynamic> _$GameStateToJson(GameState instance) => <String, dynamic>{
+  'league': instance.league.toJson(),
+  'playerTeamId': instance.playerTeamId,
+  'currentDate': instance.currentDate.toIso8601String(),
+  'currentDay': instance.currentDay,
+  'currentSeason': instance.currentSeason,
+};

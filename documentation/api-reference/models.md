@@ -9,6 +9,8 @@ This document provides comprehensive API reference for all data models in the So
 The Soccer Engine models represent core entities in soccer simulation:
 - **Player**: Individual player with attributes and statistics
 - **Team**: Squad management and team organization
+- **League**: Competition management and tournament organization
+- **Gameweek**: Match scheduling and round organization
 - **Match**: Match data, events, and results
 - **Financial Account**: Budget management and Financial Fair Play
 - **Youth Academy**: Youth player development
@@ -90,6 +92,12 @@ final json = player.toJson();
 final player = Player.fromJson(json);
 ```
 
+### Cross-References
+
+- **Used in [Team](#-team)**: Players form team squads and starting lineups
+- **Part of [Match Events](#match-events)**: Players are involved in match events (goals, cards, etc.)
+- **Youth Development**: See [Youth Academy](#-youth-academy) for player development
+
 ### Example Usage
 
 ```dart
@@ -113,6 +121,367 @@ print('Position Rating: ${player.positionOverallRating}'); // 91
 final updatedPlayer = player
     .updateForm(8)
     .updateFitness(95);
+```
+
+## 🏆 League
+
+Represents a football league with teams, rules, and metadata for organizing competitions.
+
+### Constructor
+
+```dart
+League({
+  required String id,
+  required String name,
+  required String country,
+  LeagueTier tier = LeagueTier.tier1,
+  LeagueFormat format = LeagueFormat.roundRobin,
+  List<Team>? teams,
+  LeagueRules? rules,
+  int? foundedYear,
+  int maxTeams = 20,
+  int minTeams = 8,
+})
+```
+
+### Properties
+
+| Property | Type | Description | Default/Range |
+|----------|------|-------------|---------------|
+| `id` | `String` | Unique league identifier | Non-empty |
+| `name` | `String` | League name | Non-empty |
+| `country` | `String` | Country where league is based | Non-empty |
+| `tier` | `LeagueTier` | League tier/division level | `tier1` |
+| `format` | `LeagueFormat` | League format | `roundRobin` |
+| `teams` | `List<Team>` | Participating teams | Empty list |
+| `rules` | `LeagueRules` | League rules and scoring | Default rules |
+| `foundedYear` | `int` | Year league was founded | Current year (1850-current) |
+| `maxTeams` | `int` | Maximum teams allowed | 20 |
+| `minTeams` | `int` | Minimum teams for competition | 8 |
+
+### Enums
+
+#### `LeagueFormat`
+```dart
+enum LeagueFormat {
+  roundRobin,         // Each team plays every other team twice
+  singleRoundRobin,   // Each team plays every other team once
+  playoff,            // Elimination rounds
+  groupAndKnockout,   // Group stage + knockout rounds
+}
+```
+
+#### `LeagueTier`
+```dart
+enum LeagueTier {
+  tier1,      // Top tier (Premier League, La Liga)
+  tier2,      // Second tier (Championship, La Liga 2)
+  tier3,      // Third tier
+  tier4,      // Fourth tier
+  tier5Plus,  // Fifth tier and below
+}
+
+// Each tier has a display name
+String get displayName; // "1st Tier", "2nd Tier", etc.
+```
+
+### League Rules
+
+```dart
+class LeagueRules {
+  final int promotionSpots;    // Teams promoted (default: 2)
+  final int relegationSpots;   // Teams relegated (default: 3)
+  final int playoffSpots;      // Teams in playoffs (default: 4)
+  final int pointsForWin;      // Points for win (default: 3)
+  final int pointsForDraw;     // Points for draw (default: 1)
+  final int pointsForLoss;     // Points for loss (default: 0)
+  final bool useGoalDifference; // Use goal difference for tiebreaking (default: true)
+  final bool useHeadToHead;    // Use head-to-head for tiebreaking (default: false)
+}
+```
+
+### Computed Properties
+
+#### `isCompetitive` → `bool`
+Whether league has minimum teams for competitive play:
+```dart
+bool get isCompetitive => teams.length >= minTeams;
+```
+
+#### `canStartSeason` → `bool`
+Whether league can start with fixture generation:
+```dart
+bool get canStartSeason {
+  if (!isCompetitive) return false;
+  if ((format == LeagueFormat.roundRobin || format == LeagueFormat.singleRoundRobin) 
+      && teams.length % 2 != 0) return false;
+  return true;
+}
+```
+
+#### `requiredGameweeks` → `int`
+Number of gameweeks needed for the season:
+- **Round-robin**: `(teams.length - 1) * 2`
+- **Single round-robin**: `teams.length - 1`
+- **Other formats**: Simplified calculation
+
+#### `statistics` → `Map<String, dynamic>`
+League statistics including team count, player totals, averages, and status.
+
+### Methods
+
+#### `addTeam(Team team)` → `League`
+Adds a team to the league.
+```dart
+final league = League(id: 'pl', name: 'Premier League', country: 'England');
+final updatedLeague = league.addTeam(manchesterUnited);
+```
+
+**Validation**:
+- Team not already in league
+- League not at maximum capacity
+- Even number of teams for round-robin format
+
+**Throws**: `ArgumentError` for validation failures.
+
+#### `removeTeam(String teamId)` → `League`
+Removes a team from the league.
+```dart
+final updatedLeague = league.removeTeam('man-utd');
+```
+
+**Validation**: Won't fall below minimum team count.
+
+#### `updateRules(LeagueRules newRules)` → `League`
+Updates league rules.
+```dart
+final newRules = LeagueRules(promotionSpots: 3, relegationSpots: 2);
+final updatedLeague = league.updateRules(newRules);
+```
+
+#### `getTeam(String teamId)` → `Team?`
+Gets a team by ID, returns `null` if not found.
+```dart
+final team = league.getTeam('liverpool');
+```
+
+### Validation Rules
+
+- **ID, name, country**: Non-empty strings
+- **Founded year**: 1850 to current year
+- **Team count**: 0 to `maxTeams`, minimum `minTeams` for competitive play
+- **Round-robin format**: Requires even number of teams
+- **No duplicate teams**: Each team can only appear once
+
+### Cross-References
+
+- **Contains [Team](#-team)**: Leagues organize teams into competitions
+- **Uses [Gameweek](#-gameweek)**: Season is divided into gameweeks
+- **Generates [Match](#-match)**: Fixture generation creates matches between teams
+
+### Example Usage
+
+```dart
+// Create a league
+final premierLeague = League(
+  id: 'premier-league',
+  name: 'Premier League',
+  country: 'England',
+  tier: LeagueTier.tier1,
+  format: LeagueFormat.roundRobin,
+  maxTeams: 20,
+  minTeams: 16,
+);
+
+// Add teams
+final updatedLeague = premierLeague
+    .addTeam(manchesterUnited)
+    .addTeam(liverpool)
+    .addTeam(chelsea);
+
+// Check league status
+print('Competitive: ${updatedLeague.isCompetitive}');
+print('Can start: ${updatedLeague.canStartSeason}');
+print('Gameweeks needed: ${updatedLeague.requiredGameweeks}');
+
+// Custom rules
+final customRules = LeagueRules(
+  promotionSpots: 3,
+  relegationSpots: 2,
+  pointsForWin: 3,
+  useGoalDifference: true,
+);
+final leagueWithRules = updatedLeague.updateRules(customRules);
+```
+
+## 📅 Gameweek
+
+Represents a gameweek/matchday in a league season, organizing matches into rounds.
+
+### Constructor
+
+```dart
+Gameweek({
+  required String id,
+  required int number,
+  required String seasonId,
+  required DateTime scheduledDate,
+  List<Match>? matches,
+  GameweekStatus status = GameweekStatus.scheduled,
+  String? name,
+  bool isSpecial = false,
+})
+```
+
+### Properties
+
+| Property | Type | Description | Default |
+|----------|------|-------------|---------|
+| `id` | `String` | Unique gameweek identifier | Required |
+| `number` | `int` | Gameweek number in season (1-based) | Required |
+| `seasonId` | `String` | League season identifier | Required |
+| `scheduledDate` | `DateTime` | Scheduled date for gameweek | Required |
+| `matches` | `List<Match>` | Matches in this gameweek | Empty list |
+| `status` | `GameweekStatus` | Current status | `scheduled` |
+| `name` | `String?` | Optional name/description | `null` |
+| `isSpecial` | `bool` | Whether this is a special gameweek | `false` |
+
+### Gameweek Status
+
+```dart
+enum GameweekStatus {
+  scheduled,   // Scheduled but not started
+  inProgress,  // Currently in progress
+  completed,   // Completed
+  postponed,   // Postponed
+  cancelled,   // Cancelled
+}
+```
+
+### Computed Properties
+
+#### Match Status Counts
+```dart
+int get completedMatchesCount;   // Number of completed matches
+int get scheduledMatchesCount;   // Number of scheduled matches  
+int get inProgressMatchesCount;  // Number of in-progress matches
+```
+
+#### Gameweek Status
+```dart
+bool get isCompleted;  // All matches completed
+bool get hasStarted;   // Any matches started
+bool get canStart;     // Can be started (valid matches, no conflicts)
+```
+
+#### Match Timing
+```dart
+DateTime? get earliestMatchDate;  // Earliest match kickoff
+DateTime? get latestMatchDate;    // Latest match kickoff
+```
+
+#### Team Information
+```dart
+Set<String> get participatingTeams;  // All team IDs in gameweek
+```
+
+#### Display
+```dart
+String get displayName;  // Name or "Gameweek X"
+```
+
+#### Statistics
+```dart
+Map<String, dynamic> get statistics;  // Match counts, goals, etc.
+```
+
+### Methods
+
+#### `addMatch(Match match)` → `Gameweek`
+Adds a match to the gameweek.
+```dart
+final gameweek = Gameweek(
+  id: 'gw1',
+  number: 1,
+  seasonId: 'season-2024',
+  scheduledDate: DateTime.now(),
+);
+final updatedGameweek = gameweek.addMatch(match);
+```
+
+**Validation**: Prevents team conflicts (same team in multiple matches).
+
+#### `removeMatch(String matchId)` → `Gameweek`
+Removes a match from the gameweek.
+```dart
+final updatedGameweek = gameweek.removeMatch('match-1');
+```
+
+#### `updateStatus(GameweekStatus newStatus)` → `Gameweek`
+Updates the gameweek status.
+```dart
+final completedGameweek = gameweek.updateStatus(GameweekStatus.completed);
+```
+
+#### `updateScheduledDate(DateTime newDate)` → `Gameweek`
+Updates the scheduled date.
+```dart
+final rescheduledGameweek = gameweek.updateScheduledDate(DateTime.parse('2024-01-15'));
+```
+
+#### `getMatchesForTeam(String teamId)` → `List<Match>`
+Gets all matches for a specific team.
+```dart
+final teamMatches = gameweek.getMatchesForTeam('liverpool');
+```
+
+#### `getMatchBetweenTeams(String team1Id, String team2Id)` → `Match?`
+Gets the match between two teams, returns `null` if not found.
+```dart
+final match = gameweek.getMatchBetweenTeams('liverpool', 'manchester-united');
+```
+
+### Validation Rules
+
+- **ID and seasonId**: Non-empty strings
+- **Number**: Must be positive (≥ 1)
+- **Team conflicts**: Each team can only appear in one match per gameweek
+- **Match validation**: All matches must be valid with proper team assignments
+
+### Example Usage
+
+```dart
+// Create a gameweek
+final gameweek = Gameweek(
+  id: 'gw1-2024',
+  number: 1,
+  seasonId: 'premier-league-2024',
+  scheduledDate: DateTime.parse('2024-08-17'),
+  name: 'Opening Weekend',
+);
+
+// Add matches
+final match1 = Match.create(
+  id: 'match-1',
+  homeTeam: manchesterUnited,
+  awayTeam: liverpool,
+  kickoffTime: DateTime.parse('2024-08-17T15:00:00'),
+);
+
+final updatedGameweek = gameweek.addMatch(match1);
+
+// Check status
+print('Can start: ${updatedGameweek.canStart}');
+print('Teams: ${updatedGameweek.participatingTeams.length}');
+print('Display: ${updatedGameweek.displayName}');
+
+// Update status as matches progress
+final inProgressGameweek = updatedGameweek.updateStatus(GameweekStatus.inProgress);
+
+// Get statistics
+final stats = updatedGameweek.statistics;
+print('Total goals: ${stats['totalGoals']}');
+print('Completed matches: ${stats['completedMatches']}');
 ```
 
 ## 🏟️ Team
@@ -261,97 +630,199 @@ print('Overall: ${updatedTeam.overallRating}');
 
 ## ⚽ Match
 
-Represents a soccer match with events, statistics, and results.
+Represents a soccer match with weather conditions, events, and match progression.
 
 ### Constructor
 
 ```dart
 Match({
   required String id,
-  required String homeTeamId,
-  required String awayTeamId,
+  required Team homeTeam,
+  required Team awayTeam,
+  required Weather weather,
   required DateTime kickoffTime,
-  int? homeScore,
-  int? awayScore,
-  List<MatchEvent>? events,
-  Map<String, dynamic>? statistics,
-  MatchStatus? status,
-  WeatherCondition? weather,
+  bool isNeutralVenue = false,
+  bool isCompleted = false,
+  int homeGoals = 0,
+  int awayGoals = 0,
+  MatchResult? result,
+  int currentMinute = 0,
+  List<MatchEvent> events = const [],
+})
+```
+
+### Factory Constructor
+
+```dart
+Match.create({
+  required String id,
+  required Team homeTeam,
+  required Team awayTeam,
+  required Weather weather,
+  required DateTime kickoffTime,
+  bool isNeutralVenue = false,
 })
 ```
 
 ### Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `id` | `String` | Unique match identifier |
-| `homeTeamId` | `String` | Home team ID |
-| `awayTeamId` | `String` | Away team ID |
-| `kickoffTime` | `DateTime` | Match start time |
-| `homeScore` | `int` | Home team goals (default: 0) |
-| `awayScore` | `int` | Away team goals (default: 0) |
-| `events` | `List<MatchEvent>` | Match events |
-| `statistics` | `Map<String, dynamic>` | Match statistics |
-| `status` | `MatchStatus` | Current match status |
-| `weather` | `WeatherCondition` | Weather conditions |
+| Property | Type | Description | Default |
+|----------|------|-------------|---------|
+| `id` | `String` | Unique match identifier | Required |
+| `homeTeam` | `Team` | Home team object | Required |
+| `awayTeam` | `Team` | Away team object | Required |
+| `weather` | `Weather` | Weather conditions | Required |
+| `kickoffTime` | `DateTime` | Match start time | Required |
+| `isNeutralVenue` | `bool` | Whether played at neutral venue | `false` |
+| `isCompleted` | `bool` | Whether match is finished | `false` |
+| `homeGoals` | `int` | Home team goals | `0` |
+| `awayGoals` | `int` | Away team goals | `0` |
+| `result` | `MatchResult?` | Match outcome | `null` |
+| `currentMinute` | `int` | Current match minute | `0` |
+| `events` | `List<MatchEvent>` | Match events | Empty list |
+
+### Weather System
+
+```dart
+class Weather {
+  final WeatherCondition condition;
+  final double temperature;  // Celsius (-40 to 50)
+  final double humidity;     // Percentage (0-100)
+  final double windSpeed;    // km/h (0-200)
+  
+  // Performance impact factor (0.8 to 1.2)
+  double get performanceImpact;
+}
+
+enum WeatherCondition {
+  sunny,    // +0.05 performance
+  cloudy,   // No change
+  rainy,    // -0.15 performance
+  snowy,    // -0.20 performance
+  windy,    // -0.10 performance
+  foggy,    // -0.10 performance
+}
+```
+
+### Match Results
+
+```dart
+enum MatchResult {
+  homeWin,  // Home team victory
+  draw,     // Tie game
+  awayWin,  // Away team victory
+}
+```
 
 ### Match Events
 
 ```dart
 enum MatchEventType {
-  goal,
-  yellowCard,
-  redCard,
-  substitution,
-  kickoff,
-  fullTime,
+  goal,         // Goal scored
+  yellowCard,   // Yellow card issued
+  redCard,      // Red card issued
+  substitution, // Player substitution
+  kickoff,      // Match start
+  halfTime,     // Half-time break
+  fullTime,     // Match end
+  penalty,      // Penalty awarded
+  ownGoal,      // Own goal
+  assist,       // Goal assist
 }
 
 class MatchEvent {
   final String id;
   final MatchEventType type;
-  final int minute;
+  final int minute;           // 0-120 minutes
   final String? playerId;
-  final String? teamId;
+  final String? playerName;
+  final String teamId;
   final String description;
+  final Map<String, dynamic> metadata;
 }
 ```
 
-### Weather Conditions
+### Computed Properties
 
+#### `homeAdvantage` → `double`
+Home advantage factor (1.0 to 1.15) based on:
+- **Neutral venue**: 1.0 (no advantage)
+- **Stadium capacity**:
+  - 80,000+: +0.15
+  - 60,000+: +0.12
+  - 40,000+: +0.10
+  - 20,000+: +0.08
+  - Under 20,000: +0.05
+
+### Methods
+
+#### `copyWith({...})` → `Match`
+Creates updated match with new state.
 ```dart
-enum WeatherCondition {
-  sunny,
-  cloudy,
-  rainy,
-  snowy,
-  foggy,
-}
+final updatedMatch = match.copyWith(
+  homeGoals: 2,
+  awayGoals: 1,
+  currentMinute: 90,
+  isCompleted: true,
+  result: MatchResult.homeWin,
+);
 ```
+
+### Validation Rules
+
+- **ID**: Non-empty string
+- **Teams**: Must be different teams
+- **Kickoff time**: Cannot be more than 1 day in the past
+- **Event minutes**: 0-120 range
+- **Weather**: Temperature (-40 to 50°C), humidity (0-100%), wind speed (0-200 km/h)
+
+### Cross-References
+
+- **Related to [Team](#-team)**: Each match involves two teams
+- **Used in [Gameweek](#-gameweek)**: Matches are organized into gameweeks
+- **Part of [League](#-league)**: Matches contribute to league standings
 
 ### Example Usage
 
 ```dart
-final match = Match(
-  id: 'match-1',
-  homeTeamId: 'barcelona',
-  awayTeamId: 'madrid',
-  kickoffTime: DateTime.now(),
-  homeScore: 2,
-  awayScore: 1,
-  weather: WeatherCondition.sunny,
+// Create weather conditions
+final weather = Weather.create(
+  condition: WeatherCondition.sunny,
+  temperature: 22.0,
+  humidity: 60.0,
+  windSpeed: 10.0,
 );
 
-// Add events
-final updatedMatch = match.addEvent(
-  MatchEvent(
-    id: 'event-1',
-    type: MatchEventType.goal,
-    minute: 25,
-    playerId: 'messi-1',
-    teamId: 'barcelona',
-    description: 'Goal by Lionel Messi',
-  ),
+// Create a match
+final match = Match.create(
+  id: 'el-clasico-2024',
+  homeTeam: barcelona,
+  awayTeam: realMadrid,
+  weather: weather,
+  kickoffTime: DateTime.parse('2024-04-21T20:00:00'),
+);
+
+// Check conditions
+print('Home advantage: ${match.homeAdvantage}'); // 1.12 (large stadium)
+print('Weather impact: ${weather.performanceImpact}'); // 1.05 (sunny)
+
+// Create match event
+final goalEvent = MatchEvent.create(
+  id: 'goal-1',
+  type: MatchEventType.goal,
+  minute: 25,
+  teamId: barcelona.id,
+  playerId: 'messi-1',
+  playerName: 'Lionel Messi',
+  description: 'Goal by Lionel Messi (assist: Xavi)',
+  metadata: {'assistId': 'xavi-1'},
+);
+
+// Update match state
+final updatedMatch = match.copyWith(
+  homeGoals: 1,
+  currentMinute: 25,
+  events: [goalEvent],
 );
 ```
 
