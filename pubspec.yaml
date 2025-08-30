@@ -1,0 +1,30 @@
+name: soccer_engine
+description: A comprehensive soccer simulation engine with tactical focus, statistical gameplay, and complete team management features.
+version: 1.0.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  # Core dependencies for JSON serialization and data handling
+  json_annotation: ^4.8.1
+  equatable: ^2.0.5
+  uuid: ^4.1.0
+
+dev_dependencies:
+  # Testing framework and coverage
+  test: ^1.24.0
+  coverage: ^1.6.3
+  mockito: ^5.4.2
+  build_runner: ^2.4.7
+  json_serializable: ^6.7.1
+  
+  # Additional testing utilities
+  fake_async: ^1.3.1
+  matcher: ^0.12.16
+
+# Configure test coverage
+dependency_overrides:
+
+executables:
+  soccer_engine:
