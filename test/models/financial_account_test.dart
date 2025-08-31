@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:soccer_engine/src/models/financial_account.dart';
+import 'package:tactics_fc_engine/src/models/financial_account.dart';
 
 void main() {
   group('FinancialAccount Tests', () {

@@ -302,12 +302,6 @@
       "languageVersion": "3.5"
     },
     {
-      "name": "soccer_utilities",
-      "rootUri": "../../utilities",
-      "packageUri": "lib/",
-      "languageVersion": "3.9"
-    },
-    {
       "name": "source_gen",
       "rootUri": "file:///C:/Users/steve/AppData/Local/Pub/Cache/hosted/pub.dev/source_gen-3.1.0",
       "packageUri": "lib/",
@@ -366,6 +360,12 @@
       "rootUri": "file:///C:/Users/steve/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.4.1",
       "packageUri": "lib/",
       "languageVersion": "3.1"
+    },
+    {
+      "name": "tactics_fc_utilities",
+      "rootUri": "../../tactics-fc-utilities",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
     },
     {
       "name": "term_glyph",
@@ -452,7 +452,7 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "soccer_engine",
+      "name": "tactics_fc_engine",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.8"

@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'youth_player.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 
 part 'youth_academy.g.dart';
 

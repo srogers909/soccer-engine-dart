@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import '../models/match.dart';
 import '../models/team.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 import '../models/enhanced_match.dart';
 import '../models/tactical_match.dart' as tactical;
 

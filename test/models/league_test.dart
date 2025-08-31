@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
-import 'package:soccer_engine/src/models/league.dart';
-import 'package:soccer_engine/src/models/team.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_engine/src/models/league.dart';
+import 'package:tactics_fc_engine/src/models/team.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 
 void main() {
   group('League Model Tests', () {

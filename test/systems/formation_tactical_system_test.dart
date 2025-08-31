@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
-import 'package:soccer_engine/src/systems/formation_tactical_system.dart';
-import 'package:soccer_engine/src/models/team.dart';
-import 'package:soccer_utilities/src/models/player.dart';
-import 'package:soccer_engine/src/models/enhanced_match.dart';
-import 'package:soccer_engine/src/models/tactical_analysis.dart';
-import 'package:soccer_engine/src/models/match.dart';
+import 'package:tactics_fc_engine/src/systems/formation_tactical_system.dart';
+import 'package:tactics_fc_engine/src/models/team.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
+import 'package:tactics_fc_engine/src/models/enhanced_match.dart';
+import 'package:tactics_fc_engine/src/models/tactical_analysis.dart';
+import 'package:tactics_fc_engine/src/models/match.dart';
 
 void main() {
   group('Formation and Tactical System', () {

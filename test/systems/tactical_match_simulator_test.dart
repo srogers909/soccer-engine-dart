@@ -5,7 +5,7 @@ import '../../lib/src/models/match.dart';
 import '../../lib/src/models/team.dart';
 import '../../lib/src/models/enhanced_match.dart';
 import '../../lib/src/models/tactical_match.dart' as tactical;
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 import '../helpers/test_data_builders.dart';
 
 /// Test suite for advanced tactical features in the streaming match simulator

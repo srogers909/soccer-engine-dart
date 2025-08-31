@@ -1,4 +1,4 @@
-import 'package:soccer_engine/soccer_engine.dart';
+import 'package:tactics_fc_engine/soccer_engine.dart';
 
 void main() {
   print('=== Soccer Engine AI Demo ===\n');

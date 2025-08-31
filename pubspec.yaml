@@ -1,4 +1,4 @@
-name: soccer_engine
+name: tactics_fc_engine
 description: A comprehensive soccer simulation engine with tactical focus, statistical gameplay, and complete team management features.
 version: 1.0.0
 
@@ -12,8 +12,8 @@ dependencies:
   uuid: ^4.1.0
   
   # Shared utilities module
-  soccer_utilities:
-    path: ../utilities
+  tactics_fc_utilities:
+    path: ../tactics-fc-utilities
 
 dev_dependencies:
   # Testing framework and coverage
@@ -31,4 +31,4 @@ dev_dependencies:
 dependency_overrides:
 
 executables:
-  soccer_engine:
+  tactics_fc_engine:

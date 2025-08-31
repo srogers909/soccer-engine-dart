@@ -1,7 +1,7 @@
 import 'dart:math';
 import '../models/match.dart';
 import '../models/team.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 import '../models/enhanced_match.dart';
 
 /// Handles soccer match simulation with realistic statistical outcomes

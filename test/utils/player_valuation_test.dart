@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import 'package:soccer_engine/src/utils/player_valuation.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_engine/src/utils/player_valuation.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 
 void main() {
   group('Player Valuation Tests', () {

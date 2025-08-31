@@ -1,15 +1,15 @@
 {
   "roots": [
-    "soccer_engine"
+    "tactics_fc_engine"
   ],
   "packages": [
     {
-      "name": "soccer_engine",
+      "name": "tactics_fc_engine",
       "version": "1.0.0",
       "dependencies": [
         "equatable",
         "json_annotation",
-        "soccer_utilities",
+        "tactics_fc_utilities",
         "uuid"
       ],
       "devDependencies": [
@@ -157,7 +157,7 @@
       ]
     },
     {
-      "name": "soccer_utilities",
+      "name": "tactics_fc_utilities",
       "version": "1.0.0+1",
       "dependencies": [
         "equatable",

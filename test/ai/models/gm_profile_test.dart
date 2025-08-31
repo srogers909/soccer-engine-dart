@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import 'package:soccer_engine/src/ai/models/gm_profile.dart';
+import 'package:tactics_fc_engine/src/ai/models/gm_profile.dart';
 
 void main() {
   group('GMProfile Tests', () {

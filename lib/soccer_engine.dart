@@ -6,7 +6,7 @@
 /// - Financial systems
 /// - Youth academy
 /// - Weather and tactical systems
-library soccer_engine;
+library tactics_fc_engine;
 
 // Core models (implemented)
 export 'package:soccer_utilities/src/models/player.dart' show Player, PlayerPosition;

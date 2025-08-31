@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
-import 'package:soccer_engine/src/models/gameweek.dart';
-import 'package:soccer_engine/src/models/match.dart';
-import 'package:soccer_engine/src/models/team.dart';
+import 'package:tactics_fc_engine/src/models/gameweek.dart';
+import 'package:tactics_fc_engine/src/models/match.dart';
+import 'package:tactics_fc_engine/src/models/team.dart';
 
 void main() {
   group('Gameweek Model Tests', () {

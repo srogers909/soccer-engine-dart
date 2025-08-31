@@ -1,6 +1,6 @@
 import '../../lib/src/models/league.dart';
 import '../../lib/src/models/team.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 import '../../lib/src/models/match.dart';
 import '../../lib/src/models/gameweek.dart';
 import '../../lib/src/systems/game_state.dart';

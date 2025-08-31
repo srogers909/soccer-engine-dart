@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:soccer_engine/soccer_engine.dart';
+import 'package:tactics_fc_engine/soccer_engine.dart';
 
 /// CLI Demo Application for Soccer Engine
 /// 

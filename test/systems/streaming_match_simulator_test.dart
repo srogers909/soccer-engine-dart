@@ -4,7 +4,7 @@ import '../../lib/src/systems/streaming_match_simulator.dart';
 import '../../lib/src/models/match.dart';
 import '../../lib/src/models/team.dart';
 import '../../lib/src/models/enhanced_match.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 import '../helpers/test_data_builders.dart';
 
 void main() {

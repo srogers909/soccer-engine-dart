@@ -1,7 +1,7 @@
 import 'enhanced_match.dart';
 import 'match.dart';
 import 'team.dart';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 
 /// Validation result for formations and tactics
 class ValidationResult {

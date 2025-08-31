@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:soccer_utilities/src/models/player.dart';
+import 'package:tactics_fc_utilities/src/models/player.dart';
 
 /// Market conditions affecting player valuations
 class MarketConditions {
