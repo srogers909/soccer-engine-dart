@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'team.dart';
 import 'enhanced_match.dart';
+import 'tactical_match.dart' as tactical;
 
 part 'match.g.dart';
 
@@ -158,6 +159,12 @@ class Match {
   final MatchStats? matchStats;
   final Map<String, PlayerPerformance>? playerPerformances;
   final MomentumTracker? momentumTracker;
+  
+  // Tactical system fields
+  final List<tactical.TacticalHistory>? tacticalHistory;
+  final Map<String, tactical.TeamChemistry>? teamChemistry;
+  final Map<String, tactical.TacticalAILearning>? tacticalAILearning;
+  final Map<String, double>? tacticalEffectiveness;
 
   const Match({
     required this.id,
@@ -175,6 +182,10 @@ class Match {
     this.matchStats,
     this.playerPerformances,
     this.momentumTracker,
+    this.tacticalHistory,
+    this.teamChemistry,
+    this.tacticalAILearning,
+    this.tacticalEffectiveness,
   });
 
   /// Creates a new match with validation
@@ -240,6 +251,10 @@ class Match {
     MatchStats? matchStats,
     Map<String, PlayerPerformance>? playerPerformances,
     MomentumTracker? momentumTracker,
+    List<tactical.TacticalHistory>? tacticalHistory,
+    Map<String, tactical.TeamChemistry>? teamChemistry,
+    Map<String, tactical.TacticalAILearning>? tacticalAILearning,
+    Map<String, double>? tacticalEffectiveness,
   }) {
     return Match(
       id: id,
@@ -257,6 +272,10 @@ class Match {
       matchStats: matchStats ?? this.matchStats,
       playerPerformances: playerPerformances ?? this.playerPerformances,
       momentumTracker: momentumTracker ?? this.momentumTracker,
+      tacticalHistory: tacticalHistory ?? this.tacticalHistory,
+      teamChemistry: teamChemistry ?? this.teamChemistry,
+      tacticalAILearning: tacticalAILearning ?? this.tacticalAILearning,
+      tacticalEffectiveness: tacticalEffectiveness ?? this.tacticalEffectiveness,
     );
   }
 
